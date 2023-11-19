@@ -55,11 +55,11 @@ jobs:
           shot-scraper multi shots.yml
       - name: Scrape page
         run: |
-          shot-scraper javascript https://simonwillison.net/2022/Mar/24/datasette-061/ "
+          shot-scraper javascript -o scraped.txt https://simonwillison.net/2022/Mar/24/datasette-061/ "
           async () => {
             const readability = await import('https://cdn.skypack.dev/@mozilla/readability');
             return (new readability.Readability(document)).parse();
-          }" -o scraped.txt
+          }" | jq .textContent -r
       - name: Commit and push
         run: |-
           git config user.name "Automated"
